@@ -53,18 +53,17 @@ window.onload = function () {
 //READ
 function displayJogadoras() {
     const app = document.getElementById("listaJogadoras");
+    app.innerHTML = ""; // <--- evita duplicar quando recarregar
 
     jogadoras.forEach((jogadora) => {
         const card = document.createElement("div");
         card.classList.add("card-jogadora");
 
-        card.innerHTML = 
+        card.innerHTML =
             `<h3>${jogadora.nome}</h3>
-            <img src=${jogadora.foto} alt="Foto de ${jogadora.nome}" style="max-width:300px;">
+            <img src="${jogadora.foto}" alt="Foto de ${jogadora.nome}">
             <p>${jogadora.posicao} • ${jogadora.clube}</p>
-            <p>Gols: ${jogadora.gols} | Assist.: ${jogadora.assistencias} | Jogos: ${jogadora.jogos}</p>
-            <hr style="margin:20px 0;">`
-        ;
+            <p>Gols: ${jogadora.gols} | Assist.: ${jogadora.assistencias} | Jogos: ${jogadora.jogos}</p>`;
 
         app.appendChild(card);
     });
