@@ -52,19 +52,29 @@ window.onload = function () {
 
 //READ
 function displayJogadoras() {
-    const app = document.getElementById("listaJogadoras");
-    app.innerHTML = ""; // <--- evita duplicar quando recarregar
+    const lista = document.getElementById('listaJogadoras');
+    lista.innerHTML = '';
 
     jogadoras.forEach((jogadora) => {
-        const card = document.createElement("div");
-        card.classList.add("card-jogadora");
+        const card = document.createElement('div');
+        card.className = 'card-jogadora';
 
-        card.innerHTML =
-            `<h3>${jogadora.nome}</h3>
-            <img src="${jogadora.foto}" alt="Foto de ${jogadora.nome}">
-            <p>${jogadora.posicao} • ${jogadora.clube}</p>
-            <p>Gols: ${jogadora.gols} | Assist.: ${jogadora.assistencias} | Jogos: ${jogadora.jogos}</p>`;
+        card.innerHTML = `
+            <div class="thumb">
+                <img src="${jogadora.foto}" alt="Foto de ${jogadora.nome}">
+            </div>
 
-        app.appendChild(card);
+            <div class="conteudo">
+                <h3>${jogadora.nome}</h3>
+                <div class="meta">${jogadora.posicao} • ${jogadora.clube}</div>
+                <div class="stats">
+                    <span class="pill">Gols: <strong>${jogadora.gols}</strong></span>
+                    <span class="pill">Assist.: <strong>${jogadora.assistencias}</strong></span>
+                    <span class="pill">Jogos: <strong>${jogadora.jogos}</strong></span>
+                </div>
+            </div>
+        `;
+
+        lista.appendChild(card);
     });
 }
