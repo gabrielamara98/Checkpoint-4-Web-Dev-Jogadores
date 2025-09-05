@@ -49,15 +49,29 @@ let jogadoras = [
 window.onload = function () {
     displayJogadoras();
     document.querySelector('#botaoSubmit').addEventListener('click',createCard)
+    document.querySelector('#placeholder-cards').addEventListener('click',handleCards)
 
 };
+function handleCards(event){
+    const elementoClicado = event.target.closest("button")
+    if(!elementoClicado) return;
+
+    const action = elementoClicado.dataset.action
+    const index = elementoClicado.dataset.index
+
+    if(action == "editar"){
+        updateInfoCard(index)
+    }else if(action =="apagar"){
+        console.log("Funcao remover" + index)
+    }
+}
 
 //READ
 function displayJogadoras() {
     const lista = document.getElementById('listaJogadoras');
     lista.innerHTML = '';
 
-    jogadoras.forEach((jogadora) => {
+    jogadoras.forEach((jogadora,index) => {
         const card = document.createElement('div');
         card.className = 'card-jogadora';
 
@@ -74,12 +88,17 @@ function displayJogadoras() {
                     <span class="pill">Assist.: <strong>${jogadora.assistencias}</strong></span>
                     <span class="pill">Jogos: <strong>${jogadora.jogos}</strong></span>
                 </div>
+                <div class='botoes-func'>
+                    <button data-action = "editar" data-index = "${index}">Editar</button>
+                    <button data-action = "apagar" data-index = "${index}">Apagar</button>
+                </div>
             </div>
         `;
 
         lista.appendChild(card);
     });
 }
+
 function createCard(event){
     event.preventDefault()
 
@@ -102,5 +121,47 @@ function createCard(event){
     jogadoras.unshift(atributos)
     document.querySelector('#form-jogadores').reset()
     displayJogadoras()
+    alert('Jogadora adicionada com sucesso!')
     
+}
+
+function updateInfoCard(index){
+    document.querySelector('#form-jogadores').reset() // Limpa qualquer info do forms
+    const checarElemento = document.getElementById('botao-alterar')
+    //Checa a existencia do botao para garrantir que os dados serao alterados dentro da propriedade alterar
+    if(checarElemento){
+        alert("Voce ja clicou em Editar")
+    }else{
+        const criarBotao = document.createElement('button')
+        criarBotao.setAttribute('id','botao-alterar')
+        criarBotao.textContent = 'Alterar'
+        document.querySelector('#botaoSubmit').after(criarBotao)
+        //Traz os valores dentro das chaves e coloca em um array
+        let obj = jogadoras[index]
+        let info = []
+
+        for(let chave in obj){
+            info.push(obj[chave])
+        }
+        //Coloca nos inputs vazios o valor do array
+        const inputs = document.querySelectorAll('.input-holder input')
+        inputs.forEach((item,index)=>{
+            item.value = info[index]
+        })
+    
+        document.querySelector('#botao-alterar').addEventListener('click',()=>{
+            inputs.forEach((item,index)=>{
+                info[index] = item.value
+            })
+            let count = 0
+            for(let chave in obj){
+                obj[chave] =info[count]
+                count +=1
+            }
+            displayJogadoras()
+            document.querySelector('#form-jogadores').reset()
+            criarBotao.remove()
+            alert("Jogadora editada com sucesso!")
+        })
+    }
 }
