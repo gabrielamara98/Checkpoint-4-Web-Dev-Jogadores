@@ -48,6 +48,8 @@ let jogadoras = [
 
 window.onload = function () {
     displayJogadoras();
+    document.querySelector('#botaoSubmit').addEventListener('click',createCard)
+
 };
 
 //READ
@@ -77,4 +79,28 @@ function displayJogadoras() {
 
         lista.appendChild(card);
     });
+}
+function createCard(event){
+    event.preventDefault()
+
+    const inputs = document.querySelectorAll('.input-holder input')
+    const chaves = ['nome','posicao','clube','foto','gols','assistencias','jogos']
+    const atributos = {}
+
+    inputs.forEach((item,index)=>{
+        let elemento = item.value
+        if(!elemento){
+            elemento = prompt(`O Campo de numero ${index + 1} é um campo vazio! Por favor Preencha antes de prosseguir`)
+            inputs[index].value = elemento
+        }
+        //Coloca dinamicamente os valores no objeto sem ter que repetir o processo
+        const chave = chaves[index]
+        atributos[chave] = elemento
+
+    })
+
+    jogadoras.unshift(atributos)
+    document.querySelector('#form-jogadores').reset()
+    displayJogadoras()
+    
 }
