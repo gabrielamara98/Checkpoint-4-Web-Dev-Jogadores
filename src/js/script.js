@@ -128,28 +128,35 @@ function createCard(event){
 
 function updateInfoCard(index){
     document.querySelector('#form-jogadores').reset() // Limpa qualquer info do forms
+    //Pega e seleciona o conteudo do Objeto(Json)
+    let obj = jogadoras[index]
+    let info = []
+    //Tratamento das informações
+    for(let chave in obj){
+        info.push(obj[chave])
+    }
+    //Pega as informações e coloca nos campos do forms
+    const inputs = document.querySelectorAll('.input-holder input')
+    inputs.forEach((item,index)=>{
+        item.value = info[index]
+    })
+    //Elementos que serão substituidos
+    const botaoCadastrar = document.querySelector('#botaoSubmit')
+    const tituloForm = document.querySelector('#form-holder h4')
+    tituloForm.textContent = 'Alterar Jogador(a)'
+
     const checarElemento = document.getElementById('botao-alterar')
     //Checa a existencia do botao para garrantir que os dados serao alterados dentro da propriedade alterar
+    
     if(checarElemento){
         alert("Voce ja clicou em Editar")
     }else{
         const criarBotao = document.createElement('button')
         criarBotao.setAttribute('id','botao-alterar')
         criarBotao.textContent = 'Alterar'
-        document.querySelector('#botaoSubmit').after(criarBotao)
+        botaoCadastrar.replaceWith(criarBotao)
+        
         //Traz os valores dentro das chaves e coloca em um array
-        let obj = jogadoras[index]
-        let info = []
-
-        for(let chave in obj){
-            info.push(obj[chave])
-        }
-        //Coloca nos inputs vazios o valor do array
-        const inputs = document.querySelectorAll('.input-holder input')
-        inputs.forEach((item,index)=>{
-            item.value = info[index]
-        })
-    
         document.querySelector('#botao-alterar').addEventListener('click',()=>{
             inputs.forEach((item,index)=>{
                 info[index] = item.value
@@ -161,7 +168,8 @@ function updateInfoCard(index){
             }
             displayJogadoras()
             document.querySelector('#form-jogadores').reset()
-            criarBotao.remove()
+            tituloForm.textContent = 'Cadastrar Jogador(a)'
+            criarBotao.replaceWith(botaoCadastrar)
             alert("Jogadora editada com sucesso!")
         })
     }
