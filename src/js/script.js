@@ -105,11 +105,12 @@ function createCard(event){
     const inputs = document.querySelectorAll('.input-holder input')
     const chaves = ['nome','posicao','clube','foto','gols','assistencias','jogos']
     const atributos = {}
+    const label = document.querySelectorAll('.input-holder label')
 
     inputs.forEach((item,index)=>{
         let elemento = item.value
-        if(!elemento){
-            elemento = prompt(`O Campo de numero ${index + 1} é um campo vazio! Por favor Preencha antes de prosseguir`)
+        while(!elemento){
+            elemento = prompt(`O campo ${label[index].textContent} é um campo vazio! Por favor preencha antes de prosseguir`)
             inputs[index].value = elemento
         }
         //Coloca dinamicamente os valores no objeto sem ter que repetir o processo
