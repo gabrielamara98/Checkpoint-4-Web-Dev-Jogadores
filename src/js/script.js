@@ -47,6 +47,7 @@ let jogadoras = [
 ];
 
 window.onload = function () {
+    loadJogadoras()
     displayJogadoras();
     document.querySelector('#botaoSubmit').addEventListener('click',createCard)
     document.querySelector('#placeholder-cards').addEventListener('click',handleCards)
@@ -62,7 +63,7 @@ function handleCards(event){
     if(action == "editar"){
         updateInfoCard(index)
     }else if(action =="apagar"){
-        console.log("Funcao remover" + index)
+        removeCard(index)
     }
 }
 
@@ -121,6 +122,7 @@ function createCard(event){
 
     jogadoras.unshift(atributos)
     document.querySelector('#form-jogadores').reset()
+    localSaveJogadoras()
     displayJogadoras()
     alert('Jogadora adicionada com sucesso!')
     
@@ -128,28 +130,35 @@ function createCard(event){
 
 function updateInfoCard(index){
     document.querySelector('#form-jogadores').reset() // Limpa qualquer info do forms
+    //Pega e seleciona o conteudo do Objeto(Json)
+    let obj = jogadoras[index]
+    let info = []
+    //Tratamento das informações
+    for(let chave in obj){
+        info.push(obj[chave])
+    }
+    //Pega as informações e coloca nos campos do forms
+    const inputs = document.querySelectorAll('.input-holder input')
+    inputs.forEach((item,index)=>{
+        item.value = info[index]
+    })
+    //Elementos que serão substituidos
+    const botaoCadastrar = document.querySelector('#botaoSubmit')
+    const tituloForm = document.querySelector('#form-holder h4')
+    tituloForm.textContent = 'Alterar Jogador(a)'
+
     const checarElemento = document.getElementById('botao-alterar')
     //Checa a existencia do botao para garrantir que os dados serao alterados dentro da propriedade alterar
+    
     if(checarElemento){
         alert("Voce ja clicou em Editar")
     }else{
         const criarBotao = document.createElement('button')
         criarBotao.setAttribute('id','botao-alterar')
         criarBotao.textContent = 'Alterar'
-        document.querySelector('#botaoSubmit').after(criarBotao)
+        botaoCadastrar.replaceWith(criarBotao)
+        
         //Traz os valores dentro das chaves e coloca em um array
-        let obj = jogadoras[index]
-        let info = []
-
-        for(let chave in obj){
-            info.push(obj[chave])
-        }
-        //Coloca nos inputs vazios o valor do array
-        const inputs = document.querySelectorAll('.input-holder input')
-        inputs.forEach((item,index)=>{
-            item.value = info[index]
-        })
-    
         document.querySelector('#botao-alterar').addEventListener('click',()=>{
             inputs.forEach((item,index)=>{
                 info[index] = item.value
@@ -159,10 +168,37 @@ function updateInfoCard(index){
                 obj[chave] =info[count]
                 count +=1
             }
+            localSaveJogadoras()
             displayJogadoras()
             document.querySelector('#form-jogadores').reset()
-            criarBotao.remove()
+            tituloForm.textContent = 'Cadastrar Jogador(a)'
+            criarBotao.replaceWith(botaoCadastrar)
             alert("Jogadora editada com sucesso!")
         })
+    }
+}
+
+function removeCard(index){
+    const decisao = prompt("Tem certeza que deseja apagar o card?")
+    if(decisao){
+        jogadoras.splice(index,1)
+        alert("Jogadora Deletada")
+        localSaveJogadoras()
+        displayJogadoras()
+    }else{
+        alert("Operação cancelada")
+    }
+}
+
+function localSaveJogadoras() {
+    localStorage.setItem("jogadoras", JSON.stringify(jogadoras))
+}
+
+function loadJogadoras() {
+    const jogadorasSalvas = localStorage.getItem("jogadoras")
+    if (jogadorasSalvas) {
+        jogadoras = JSON.parse(jogadorasSalvas)
+    }else{
+        localSaveJogadoras()
     }
 }
