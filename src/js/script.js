@@ -64,7 +64,8 @@ function handleCards(event){
         updateInfoCard(index)
     }else if(action =="apagar"){
         removeCard(index)
-    }
+    }else if(action =="favoritar")
+        favoritarJogadora(index)
 }
 
 //READ
@@ -94,7 +95,7 @@ function displayJogadoras() {
                     <button data-action = "apagar" data-index = "${index}">Apagar</button>
                 </div>
                 <div class= 'favoritar-icon'>
-                    <button><i class="fa-solid fa-heart"></i></button>
+                    <button class ="btn-favoritar" data-action = "favoritar" data-index = "${index}"><i class="fa-solid fa-heart"></i></button>
                 </div>
             </div>
         `;
@@ -204,4 +205,8 @@ function loadJogadoras() {
     }else{
         localSaveJogadoras()
     }
+}
+
+function favoritarJogadora(index){
+    console.log("Botao funcionando")
 }
