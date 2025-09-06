@@ -47,6 +47,7 @@ let jogadoras = [
 ];
 
 window.onload = function () {
+    loadJogadoras()
     displayJogadoras();
     document.querySelector('#botaoSubmit').addEventListener('click',createCard)
     document.querySelector('#placeholder-cards').addEventListener('click',handleCards)
@@ -121,6 +122,7 @@ function createCard(event){
 
     jogadoras.unshift(atributos)
     document.querySelector('#form-jogadores').reset()
+    localSaveJogadoras()
     displayJogadoras()
     alert('Jogadora adicionada com sucesso!')
     
@@ -166,6 +168,7 @@ function updateInfoCard(index){
                 obj[chave] =info[count]
                 count +=1
             }
+            localSaveJogadoras()
             displayJogadoras()
             document.querySelector('#form-jogadores').reset()
             tituloForm.textContent = 'Cadastrar Jogador(a)'
@@ -180,8 +183,20 @@ function removeCard(index){
     if(decisao){
         jogadoras.splice(index,1)
         alert("Jogadora Deletada")
+        localSaveJogadoras()
         displayJogadoras()
     }else{
         alert("Operação cancelada")
+    }
+}
+
+function localSaveJogadoras() {
+    localStorage.setItem("jogadoras", JSON.stringify(jogadoras));
+}
+
+function loadJogadoras() {
+    const jogadorasSalvas = localStorage.getItem("jogadoras");
+    if (jogadorasSalvas) {
+        jogadoras = JSON.parse(jogadorasSalvas);
     }
 }
