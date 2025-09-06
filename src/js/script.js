@@ -191,12 +191,14 @@ function removeCard(index){
 }
 
 function localSaveJogadoras() {
-    localStorage.setItem("jogadoras", JSON.stringify(jogadoras));
+    localStorage.setItem("jogadoras", JSON.stringify(jogadoras))
 }
 
 function loadJogadoras() {
-    const jogadorasSalvas = localStorage.getItem("jogadoras");
+    const jogadorasSalvas = localStorage.getItem("jogadoras")
     if (jogadorasSalvas) {
-        jogadoras = JSON.parse(jogadorasSalvas);
+        jogadoras = JSON.parse(jogadorasSalvas)
+    }else{
+        localSaveJogadoras()
     }
 }
