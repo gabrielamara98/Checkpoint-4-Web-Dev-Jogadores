@@ -93,6 +93,9 @@ function displayJogadoras() {
                     <button data-action = "editar" data-index = "${index}">Editar</button>
                     <button data-action = "apagar" data-index = "${index}">Apagar</button>
                 </div>
+                <div class= 'favoritar-icon'>
+                    <button><i class="fa-solid fa-heart"></i></button>
+                </div>
             </div>
         `;
 
