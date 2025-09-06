@@ -62,7 +62,7 @@ function handleCards(event){
     if(action == "editar"){
         updateInfoCard(index)
     }else if(action =="apagar"){
-        console.log("Funcao remover" + index)
+        removeCard(index)
     }
 }
 
@@ -172,5 +172,16 @@ function updateInfoCard(index){
             criarBotao.replaceWith(botaoCadastrar)
             alert("Jogadora editada com sucesso!")
         })
+    }
+}
+
+function removeCard(index){
+    const decisao = prompt("Tem certeza que deseja apagar o card?")
+    if(decisao){
+        jogadoras.splice(index,1)
+        alert("Jogadora Deletada")
+        displayJogadoras()
+    }else{
+        alert("Operação cancelada")
     }
 }
