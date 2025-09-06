@@ -3,7 +3,7 @@ let jogadoras = [
         nome: "Andressa Alves",
         posicao: "Meio-campo",
         clube: "Corinthians",
-        foto: "https://cdn.agenciamural.org.br/2023/07/11213707/AndressaAlves-SamRoblesCBF.jpg",
+        foto: "https://cdn.meutimao.com.br/_upload/jogador/andressa-alves-da-silva-no-corinthians_v.jpg",
         gols: 15,
         assistencias: 10,
         jogos: 28
@@ -12,7 +12,7 @@ let jogadoras = [
         nome: "Dayana Rodríguez",
         posicao: "Meio-campo",
         clube: "Corinthians",
-        foto: "https://www.meutimao.com.br/fotos-do-corinthians/w941/2025/01/15/dayana_rodriguez_no_treino_da_pre-temporada_vqbo.jpg",
+        foto: "https://cdn.meutimao.com.br/_upload/jogador/dayana-lisset-rodriguez-leon-no-corinthians_a.jpg",
         gols: 5,
         assistencias: 12,
         jogos: 30
@@ -21,7 +21,7 @@ let jogadoras = [
         nome: "Mariza",
         posicao: "Zagueira",
         clube: "Corinthians",
-        foto: "https://centraldotimao.com.br/wp-content/uploads/2023/10/agenciacorinthians-foto-210079-1-scaled-e1696862715310.jpg",
+        foto: "https://cdn.meutimao.com.br/_upload/jogador/mariza-nascimento-silva-no-corinthians_p.jpg",
         gols: 2,
         assistencias: 1,
         jogos: 32
@@ -30,7 +30,7 @@ let jogadoras = [
         nome: "Thaís Regina",
         posicao: "Zagueira",
         clube: "Corinthians",
-        foto: "https://cdn.meutimao.com.br/_upload/jogador/thais-regina-da-silva-no-corinthians_x_corinthians.jpg",
+        foto: "https://cdn.meutimao.com.br/_upload/jogador/thais-regina-da-silva-no-corinthians_z.jpg",
         gols: 1,
         assistencias: 2,
         jogos: 25
@@ -39,7 +39,7 @@ let jogadoras = [
         nome: "Letícia Teles",
         posicao: "Zagueira",
         clube: "Corinthians",
-        foto: "https://cdn.meutimao.com.br/fotos-do-corinthians/w941/2025/04/10/leticia_teles_em_treino_do_corinthians_f22v.jpg",
+        foto: "https://cdn.meutimao.com.br/_upload/jogador/leticia-teles-da-silva-no-corinthians_b.jpg",
         gols: 0,
         assistencias: 0,
         jogos: 18
