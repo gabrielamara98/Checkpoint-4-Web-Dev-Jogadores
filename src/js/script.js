@@ -52,33 +52,32 @@ let jogadoras = [
 ];
 
 window.onload = function () {
-    loadJogadoras()
+    loadJogadoras();
     displayJogadoras();
-    document.querySelector('#botaoSubmit').addEventListener('click',createCard)
-    document.querySelector('#listaJogadoras').addEventListener('click',handleCards)
+    document.querySelector('#botaoSubmit').addEventListener('click',createCard);
+    document.querySelector('#listaJogadoras').addEventListener('click',handleCards);
 
 };
+//Handler
 function handleCards(event){
-    const elementoClicado = event.target.closest("button")
+    const elementoClicado = event.target.closest("button");
     if(!elementoClicado) return;
 
-    const action = elementoClicado.dataset.action
-    const index = elementoClicado.dataset.index
+    const action = elementoClicado.dataset.action;
+    const index = elementoClicado.dataset.index;
 
     if(action == "editar"){
-        updateInfoCard(index)
+        updateInfoCard(index);
     }else if(action =="apagar"){
-        removeCard(index)
+        removeCard(index);
     }else if(action =="favoritar")
-        favoritarJogadora(index)
+        favoritarJogadora(index);
 }
 
-//READ
+//Read Json
 function displayJogadoras() {
     const lista = document.getElementById('listaJogadoras');
     lista.innerHTML = '';
-    const classeFavorita = jogadoras.favoritar ? 'favorita' : '';
-
 
     jogadoras.forEach((jogadora,index) => {
         const card = document.createElement('div');
@@ -111,107 +110,115 @@ function displayJogadoras() {
     });
 }
 
+//Create Card
 function createCard(event){
-    event.preventDefault()
+    event.preventDefault();
 
-    const inputs = document.querySelectorAll('.input-holder input')
-    const chaves = ['nome','posicao','clube','foto','gols','assistencias','jogos']
-    const atributos = {}
-    const label = document.querySelectorAll('.input-holder label')
+    const inputs = document.querySelectorAll('.input-holder input');
+    const label = document.querySelectorAll('.input-holder label');
 
-    inputs.forEach((item,index)=>{
-        let elemento = item.value
-        while(!elemento){
-            elemento = prompt(`O campo ${label[index].textContent} é um campo vazio! Por favor preencha antes de prosseguir`)
-            inputs[index].value = elemento
+    for(let x = 0;x<inputs.length;x++){
+        let elemento = inputs[x].value;
+        if(!elemento){
+            alert(`O campo ${label[x].textContent} é um campo vazio! Por favor preencha com alguma informação`);
+            return;
         }
-        //Coloca dinamicamente os valores no objeto sem ter que repetir o processo
-        const chave = chaves[index]
-        atributos[chave] = elemento
+    }
 
+    const chaves = ['nome','posicao','clube','foto','gols','assistencias','jogos'];
+    const atributos = {};
+    
+    inputs.forEach((item,index)=>{
+        const chave = chaves[index];
+        atributos[chave] = item.value;
     })
 
-    jogadoras.unshift(atributos)
-    document.querySelector('#form-jogadores').reset()
-    localSaveJogadoras()
-    displayJogadoras()
-    alert('Jogadora adicionada com sucesso!')
+    jogadoras.unshift(atributos);
+    document.querySelector('#form-jogadores').reset();
+    localSaveJogadoras();
+    displayJogadoras();
+    alert('Jogadora adicionada com sucesso!');
     
 }
 
+//Update Card
 function updateInfoCard(index){
-    document.querySelector('#form-jogadores').reset() // Limpa qualquer info do forms
+    document.querySelector('#form-jogadores').reset(); // Limpa qualquer info do forms
     //Pega e seleciona o conteudo do Objeto(Json)
-    let obj = jogadoras[index]
+    let obj = jogadoras[index];
     //Tratamento das informações
-    const chaves = ['nome','posicao','clube','foto','gols','assistencias','jogos']
-    const info = chaves.map(campo => obj[campo])
+    const chaves = ['nome','posicao','clube','foto','gols','assistencias','jogos'];
+    const info = chaves.map(campo => obj[campo]);
     //Pega as informações e coloca nos campos do forms
-    const inputs = document.querySelectorAll('.input-holder input')
+    const inputs = document.querySelectorAll('.input-holder input');
     inputs.forEach((item,index)=>{
-        item.value = info[index]
+        item.value = info[index];
     })
     //Elementos que serão substituidos
-    const botaoCadastrar = document.querySelector('#botaoSubmit')
-    const tituloForm = document.querySelector('#form-holder h4')
-    tituloForm.textContent = 'Alterar Jogador(a)'
+    const botaoCadastrar = document.querySelector('#botaoSubmit');
+    const tituloForm = document.querySelector('#form-holder h4');
+    tituloForm.textContent = 'Alterar Jogador(a)';
 
-    const checarElemento = document.getElementById('botao-alterar')
+    const checarElemento = document.getElementById('botao-alterar');
     //Checa a existencia do botao para garantir que os dados serao alterados dentro da propriedade alterar
     
     if(checarElemento){
-        alert("Voce ja clicou em Editar")
+        alert("Voce ja clicou em Editar");
     }else{
-        const criarBotao = document.createElement('button')
-        criarBotao.setAttribute('id','botao-alterar')
-        criarBotao.textContent = 'Alterar'
-        botaoCadastrar.replaceWith(criarBotao)
+        const criarBotao = document.createElement('button');
+        criarBotao.setAttribute('id','botao-alterar');
+        criarBotao.textContent = 'Alterar';
+        botaoCadastrar.replaceWith(criarBotao);
         
         //Traz os valores dentro das chaves e coloca em um array
         document.querySelector('#botao-alterar').addEventListener('click',()=>{
             inputs.forEach((item,index)=>{
-                info[index] = item.value
+                info[index] = item.value;
             })
             chaves.forEach((chave, i) => {
             obj[chave] = info[i];
             });
-            localSaveJogadoras()
-            displayJogadoras()
-            document.querySelector('#form-jogadores').reset()
-            tituloForm.textContent = 'Cadastrar Jogador(a)'
-            criarBotao.replaceWith(botaoCadastrar)
-            alert("Jogadora editada com sucesso!")
+            localSaveJogadoras();
+            displayJogadoras();
+            document.querySelector('#form-jogadores').reset();
+            tituloForm.textContent = 'Cadastrar Jogador(a)';
+            criarBotao.replaceWith(botaoCadastrar);
+            alert("Jogadora editada com sucesso!");
         })
     }
 }
 
+//Remove Card
 function removeCard(index){
-    const decisao = prompt("Tem certeza que deseja apagar o card?")
+    const decisao = prompt("Tem certeza que deseja apagar o card?");
     if(decisao){
-        jogadoras.splice(index,1)
-        alert("Jogadora Deletada")
-        localSaveJogadoras()
-        displayJogadoras()
+        jogadoras.splice(index,1);
+        alert("Jogadora removida com sucesso!");
+        localSaveJogadoras();
+        displayJogadoras();
     }else{
-        alert("Operação cancelada")
+        alert("Operação cancelada");
     }
 }
 
+//Salva no LocalStorage
 function localSaveJogadoras() {
-    localStorage.setItem("jogadoras", JSON.stringify(jogadoras))
+    localStorage.setItem("jogadoras", JSON.stringify(jogadoras));
 }
 
+//Carrega no Local Storage
 function loadJogadoras() {
-    const jogadorasSalvas = localStorage.getItem("jogadoras")
+    const jogadorasSalvas = localStorage.getItem("jogadoras");
     if (jogadorasSalvas) {
-        jogadoras = JSON.parse(jogadorasSalvas)
+        jogadoras = JSON.parse(jogadorasSalvas);
     }else{
         localSaveJogadoras()
     }
 }
 
+//Favorita Card
 function favoritarJogadora(index){
-    jogadoras[index].favoritar = !jogadoras[index].favoritar
-    localSaveJogadoras()
-    displayJogadoras()
+    jogadoras[index].favoritar = !jogadoras[index].favoritar;
+    localSaveJogadoras();
+    displayJogadoras();
 }
