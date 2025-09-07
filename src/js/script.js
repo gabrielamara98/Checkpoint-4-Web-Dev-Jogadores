@@ -169,9 +169,17 @@ function updateInfoCard(index){
         criarBotao.setAttribute('id','botao-alterar');
         criarBotao.textContent = 'Alterar';
         botaoCadastrar.replaceWith(criarBotao);
-        
+
+        const label = document.querySelectorAll('.input-holder label');
         //Traz os valores dentro das chaves e coloca em um array
         document.querySelector('#botao-alterar').addEventListener('click',()=>{
+            for(let x = 0;x<inputs.length;x++){
+                let elemento = inputs[x].value;
+                if(!elemento){
+                    alert(`O campo ${label[x].textContent} é um campo vazio! Por favor preencha com alguma informação`);
+                    return;
+                }
+            }
             inputs.forEach((item,index)=>{
                 info[index] = item.value;
             })
