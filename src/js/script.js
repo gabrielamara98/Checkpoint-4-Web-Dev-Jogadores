@@ -6,7 +6,8 @@ let jogadoras = [
         foto: "https://cdn.meutimao.com.br/_upload/jogador/andressa-alves-da-silva-no-corinthians_v.jpg",
         gols: 15,
         assistencias: 10,
-        jogos: 28
+        jogos: 28,
+        favoritar:false
     },
     {
         nome: "Dayana Rodríguez",
@@ -15,7 +16,8 @@ let jogadoras = [
         foto: "https://cdn.meutimao.com.br/_upload/jogador/dayana-lisset-rodriguez-leon-no-corinthians_a.jpg",
         gols: 5,
         assistencias: 12,
-        jogos: 30
+        jogos: 30,
+        favoritar:false
     },
     {
         nome: "Mariza",
@@ -24,7 +26,8 @@ let jogadoras = [
         foto: "https://cdn.meutimao.com.br/_upload/jogador/mariza-nascimento-silva-no-corinthians_p.jpg",
         gols: 2,
         assistencias: 1,
-        jogos: 32
+        jogos: 32,
+        favoritar:false
     },
     {
         nome: "Thaís Regina",
@@ -33,7 +36,8 @@ let jogadoras = [
         foto: "https://cdn.meutimao.com.br/_upload/jogador/thais-regina-da-silva-no-corinthians_z.jpg",
         gols: 1,
         assistencias: 2,
-        jogos: 25
+        jogos: 25,
+        favoritar:false
     },
     {
         nome: "Letícia Teles",
@@ -42,7 +46,8 @@ let jogadoras = [
         foto: "https://cdn.meutimao.com.br/_upload/jogador/leticia-teles-da-silva-no-corinthians_b.jpg",
         gols: 0,
         assistencias: 0,
-        jogos: 18
+        jogos: 18,
+        favoritar:false
     }
 ];
 
@@ -50,7 +55,7 @@ window.onload = function () {
     loadJogadoras()
     displayJogadoras();
     document.querySelector('#botaoSubmit').addEventListener('click',createCard)
-    document.querySelector('#placeholder-cards').addEventListener('click',handleCards)
+    document.querySelector('#listaJogadoras').addEventListener('click',handleCards)
 
 };
 function handleCards(event){
@@ -72,6 +77,8 @@ function handleCards(event){
 function displayJogadoras() {
     const lista = document.getElementById('listaJogadoras');
     lista.innerHTML = '';
+    const classeFavorita = jogadoras.favoritar ? 'favorita' : '';
+
 
     jogadoras.forEach((jogadora,index) => {
         const card = document.createElement('div');
@@ -95,7 +102,7 @@ function displayJogadoras() {
                     <button data-action = "apagar" data-index = "${index}">Apagar</button>
                 </div>
                 <div class= 'favoritar-icon'>
-                    <button class ="btn-favoritar" data-action = "favoritar" data-index = "${index}"><i class="fa-solid fa-heart"></i></button>
+                    <button class ="btn-favoritar ${jogadora.favoritar ? 'favorita' : ''}" data-action = "favoritar" data-index = "${index}"><i class="fa-solid fa-heart"></i></button>
                 </div>
             </div>
         `;
@@ -136,11 +143,9 @@ function updateInfoCard(index){
     document.querySelector('#form-jogadores').reset() // Limpa qualquer info do forms
     //Pega e seleciona o conteudo do Objeto(Json)
     let obj = jogadoras[index]
-    let info = []
     //Tratamento das informações
-    for(let chave in obj){
-        info.push(obj[chave])
-    }
+    const chaves = ['nome','posicao','clube','foto','gols','assistencias','jogos']
+    const info = chaves.map(campo => obj[campo])
     //Pega as informações e coloca nos campos do forms
     const inputs = document.querySelectorAll('.input-holder input')
     inputs.forEach((item,index)=>{
@@ -152,7 +157,7 @@ function updateInfoCard(index){
     tituloForm.textContent = 'Alterar Jogador(a)'
 
     const checarElemento = document.getElementById('botao-alterar')
-    //Checa a existencia do botao para garrantir que os dados serao alterados dentro da propriedade alterar
+    //Checa a existencia do botao para garantir que os dados serao alterados dentro da propriedade alterar
     
     if(checarElemento){
         alert("Voce ja clicou em Editar")
@@ -167,11 +172,9 @@ function updateInfoCard(index){
             inputs.forEach((item,index)=>{
                 info[index] = item.value
             })
-            let count = 0
-            for(let chave in obj){
-                obj[chave] =info[count]
-                count +=1
-            }
+            chaves.forEach((chave, i) => {
+            obj[chave] = info[i];
+            });
             localSaveJogadoras()
             displayJogadoras()
             document.querySelector('#form-jogadores').reset()
@@ -208,5 +211,7 @@ function loadJogadoras() {
 }
 
 function favoritarJogadora(index){
-    console.log("Botao funcionando")
+    jogadoras[index].favoritar = !jogadoras[index].favoritar
+    localSaveJogadoras()
+    displayJogadoras()
 }
