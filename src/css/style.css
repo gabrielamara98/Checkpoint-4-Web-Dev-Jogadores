@@ -188,8 +188,22 @@ button,
     cursor: pointer;
 }
 
+.btn-favoritar {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.btn-favoritar.favorita {
+    color: red;
+}
+
 button:hover,
 #botaoSubmit:hover,
 #botao-alterar:hover {
     background: #1a1d29;
 }
+
