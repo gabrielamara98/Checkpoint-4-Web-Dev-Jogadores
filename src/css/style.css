@@ -116,6 +116,7 @@ body {
 .card-jogadora .conteudo {
     padding: 12px;
     flex: 1;
+    position: relative;
 }
 
 .card-jogadora h3 {
@@ -188,6 +189,12 @@ button,
     cursor: pointer;
 }
 
+button:hover,
+#botaoSubmit:hover,
+#botao-alterar:hover {
+    background: #1a1d29;
+}
+
 .btn-favoritar {
     background: none;
     border: none;
@@ -201,9 +208,8 @@ button,
     color: red;
 }
 
-button:hover,
-#botaoSubmit:hover,
-#botao-alterar:hover {
-    background: #1a1d29;
+.favoritar-icon{
+  position: absolute;
+  top: 12px;
+  right: 12px;
 }
-
